@@ -67,7 +67,7 @@ $ shutdown -r now
 ## Install Software
 
 ```console
-$ apt install -y --no-install-recommends fish htop fortune-mod fortunes-off fonts-cmu ttf-ancient-fonts fonts-firacode
+$ apt install -y --no-install-recommends fish fonts-cmu ttf-ancient-fonts fonts-firacode
 ```
 
 ```console
@@ -117,6 +117,9 @@ $ ln -sf /usr/bin/g++-9 ~/.local/bin/g++
 ```console
 $ ssh-keygen -f ~/.ssh/id_rsa
 ```
+
+```console
+$ apt install -y --no-install-recommends fortune-mod fortunes-off
 
 <!--       _
        .__(.)< (SHIBBOLEET)

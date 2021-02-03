@@ -67,42 +67,42 @@ $ shutdown -r now
 ## Install Software
 
 ```console
-$ apt install -y fish htop fortune-mod fortunes-off fonts-cmu ttf-ancient-fonts fonts-firacode
+$ apt install -y --no-install-recommends fish htop fortune-mod fortunes-off fonts-cmu ttf-ancient-fonts fonts-firacode
 ```
 
 ```console
-$ apt install -y python3 python3-dev python3-pip
+$ apt install -y --no-install-recommends python3 python3-dev python3-pip
 ```
 
 ```console
-$ apt install -y firefox thunderbird git meld okular mpv feh xfe
+$ apt install -y --no-install-recommends firefox thunderbird git meld okular mpv feh xfe
 ```
 
 ```console
-$ apt install -y nvidia-driver-460 xrandr x11-xserver-utils
+$ apt install -y --no-install-recommends nvidia-driver-460 xrandr x11-xserver-utils
 ```
 
 ```console
-$ apt install -y pulseaudio pulseaudio-utils pulsemixer
+$ apt install -y --no-install-recommends pulseaudio pulseaudio-utils pulsemixer
 $ usermod -aG pulse,pulse-access "$USER"
 ```
 
 ```console
-$ apt install -y texlive-full latexmk graphviz gcc-9 g++-9 ninja-build
+$ apt install -y --no-install-recommends texlive-full latexmk graphviz gcc-9 g++-9 ninja-build
 ```
 
 ```console
 $ apt-key adv --fetch-keys  https://apt.kitware.com/keys/kitware-archive-latest.asc
 $ apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ focal main'
 $ apt update
-$ apt install -y cmake
+$ apt install -y --no-install-recommends cmake
 ```
 
 ```console
 $ apt-key adv --fetch-keys https://apt.llvm.org/llvm-snapshot.gpg.key
 $ add-apt-repository -y 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-11 main'
 $ apt update
-$ apt install -y clang-11 llvm-11-dev clang-tidy-11
+$ apt install -y --no-install-recommends clang-11 llvm-11-dev clang-tidy-11
 ```
 
 ```console

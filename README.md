@@ -88,7 +88,11 @@ $ usermod -aG pulse,pulse-access "$USER"
 ```
 
 ```console
-$ apt install -y --no-install-recommends texlive-full latexmk graphviz gcc-9 g++-9 ninja-build
+$ apt install -y --no-install-recommends texlive-full latexmk gimp
+```
+
+```console
+$ apt install -y --no-install-recommends graphviz gcc-9 g++-9 ninja-build
 ```
 
 ```console

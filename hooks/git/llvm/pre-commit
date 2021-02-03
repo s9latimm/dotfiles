@@ -1,0 +1,21 @@
+#!/bin/bash
+
+ROOT=$(git rev-parse --show-toplevel)
+STATUS=0
+
+for FILE in $(git diff --cached --name-only --diff-filter=AM)
+do
+    if [[ $FILE =~ \.(h|c|hpp|cpp)$ ]]
+    then
+        clang-format --version
+        if [[ $(clang-format -style=llvm $ROOT/$FILE -output-replacements-xml | grep "<replacement ") ]]
+        then
+            clang-format -i -style=llvm $ROOT/$FILE
+            git diff $ROOT/$FILE
+            git add $ROOT/$FILE
+            STATUS=1
+        fi
+    fi
+done
+
+exit $STATUS

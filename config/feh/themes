@@ -1,0 +1,7 @@
+feh -B black \
+-d \
+--scale-down \
+--sort mtime \
+--conversion-timeout 1 \
+--recursive \
+--info "echo %z: %wx%h \(%t\)"

@@ -11,7 +11,7 @@ $ curl https://releases.ubuntu.com/20.04.1/ubuntu-20.04.1-live-server-amd64.iso 
 ```console
 $ lsblk
 $ dd if=ubuntu-20.04.1-live-server-amd64.iso of=/dev/sdc bs=64K status=progress
-### https://wiki.archlinux.org/index.php/USB_flash_installation_medium#Using_basic_command_line_utilities
+### https://wiki.archlinux.org/index.php/USB_flash_installation_medium
 ```
 ```console
 $ shutdown -r now

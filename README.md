@@ -120,6 +120,7 @@ $ ssh-keygen -f ~/.ssh/id_rsa
 
 ```console
 $ apt install -y --no-install-recommends fortune-mod fortunes-off
+```
 
 <!--       _
        .__(.)< (SHIBBOLEET)

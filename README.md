@@ -178,7 +178,16 @@ $ gpg --armor --export <KEYID>
 
 ```console
 $ nano ~/.profile
+### + GPGKEY=<KEYID>
 ### + export GPG_TTY=$(tty)
+```
+
+```console
+$ nano ~/.gnupg/gpg-agent.conf 
+### + use-agent
+### + default-cache-ttl 18000
+### + max-cache-ttl 86400
+### + ignore-cache-for-signing
 ```
 
 ```console

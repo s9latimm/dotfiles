@@ -3,6 +3,13 @@
 - [Setup](#setup)
 - [Install i3](#install-i3)
 - [Install Software](#install-software)
+  - [Core](#core)
+  - [LaTeX](#latex)
+  - [LLVM](#llvm)
+  - [Java](#java)
+  - [SSH](#ssh)
+  - [GPG](#gpg)
+  - [Misc](#misc)
 
 ## Setup
 
@@ -10,10 +17,11 @@
 $ curl https://releases.ubuntu.com/20.04.1/ubuntu-20.04.1-live-server-amd64.iso -O
 ```
 
-<!-- https://wiki.archlinux.org/index.php/USB_flash_installation_medium#Using_basic_command_line_utilities -->
+<!-- https://ubuntu.com/download/iot/installation-media#ubuntu -->
+
 ```console
 $ lsblk
-$ dd if=ubuntu-20.04.1-live-server-amd64.iso of=/dev/sdc bs=64K status=progress
+$ dd if=ubuntu-20.04.1-live-server-amd64.iso of=/dev/<DEVICE> bs=32M status=progress
 ```
 
 ```console
@@ -37,27 +45,41 @@ $ apt -y upgrade
 
 ```console
 $ apt install -y i3 xinit xterm
-$ nano ~/.profile
-### https://wiki.archlinux.org/index.php/Xinit#Autostart_X_at_login
 ```
+
+<!-- https://wiki.archlinux.org/index.php/Xinit#Autostart_X_at_login -->
+
+```console
+$ nano ~/.profile
+### 
+### + if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ] ; then
+### +   exec startx >/dev/null 2>&1
+### + fi
+```
+
+<!-- https://wiki.archlinux.org/index.php/Getty#Automatic_login_to_virtual_console -->
 
 ```console
 $ systemctl edit getty@tty1
-### https://wiki.archlinux.org/index.php/Getty#Automatic_login_to_virtual_console
+### + [Service]
+### + ExecStart=
+### + ExecStart=-/sbin/agetty --noissue --autologin <USER> %I $TERM
+### + Type=idle
+
 ```
 
 ```console
 $ lsblk 
 $ mkdir -p /media/usb
-$ mount /dev/sdc1 /media/usb
+$ mount /dev/sdx /media/usb
 ```
 
 ```console
+mkdir -p <PATH>
 $ id -u $USER
 $ id -g $USER
 $ nano /etc/fstab
 ### + /dev/disk/by-uuid/<UUID> <PATH> <FILESYSTEM> uid=<UID>,gid=<GID>,sync,auto,rw 0 0
-### mkdir -p <PATH>
 ```
 
 ```console
@@ -65,6 +87,8 @@ $ shutdown -r now
 ```
 
 ## Install Software
+
+### Core
 
 ```console
 $ apt install -y --no-install-recommends fish fonts-cmu ttf-ancient-fonts fonts-firacode
@@ -84,12 +108,16 @@ $ apt install -y --no-install-recommends nvidia-driver-460 xrandr x11-xserver-ut
 
 ```console
 $ apt install -y --no-install-recommends pulseaudio pulseaudio-utils pulsemixer
-$ usermod -aG pulse,pulse-access "$USER"
+$ usermod -aG pulse,pulse-access $USER
 ```
+
+### LaTeX
 
 ```console
 $ apt install -y --no-install-recommends texlive-full latexmk gimp
 ```
+
+### LLVM
 
 ```console
 $ apt install -y --no-install-recommends graphviz gcc-9 g++-9 ninja-build
@@ -118,16 +146,51 @@ $ ln -sf /usr/bin/gcc-9 ~/.local/bin/cc
 $ ln -sf /usr/bin/g++-9 ~/.local/bin/g++
 ```
 
+### Java
+
+```console
+$ apt install -y --no-install-recommends openjdk-11-jdk
+```
+
+```console
+$ update-alternatives --config java
+$ update-alternatives --config javac
+$ nano ~/.profile
+### + JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
+### + PATH=$JAVA_HOME/bin:$PATH
+```
+
+### SSH
+
 ```console
 $ ssh-keygen -f ~/.ssh/id_rsa
 ```
 
+### GPG
+
+<!-- https://docs.github.com/en/github/authenticating-to-github/generating-a-new-gpg-key -->
+
 ```console
-$ apt install -y --no-install-recommends fortune-mod fortunes-off
+$ gpg --full-generate-key
+$ gpg --list-secret-keys --keyid-format LONG
+$ gpg --armor --export <KEYID>
 ```
 
 ```console
-$ shutdown -h now
+$ nano ~/.profile
+### + export GPG_TTY=$(tty)
+```
+
+```console
+$ git config --global gpg.program gpg
+$ git config --global user.signingkey <KEYID>
+$ git config --global commit.gpgsign true
+```
+
+### Misc
+
+```console
+$ apt install -y --no-install-recommends fortune-mod fortunes-off
 ```
 
 <!--       _

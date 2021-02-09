@@ -1,4 +1,7 @@
-# [Ubuntu Server 20.04.1 LTS](https://ubuntu.com/server)
+<!-- https://daringfireball.net/projects/markdown/syntax.text -->
+
+[Ubuntu Server 20.04 LTS](https://ubuntu.com/server)
+================================================================================
 
 - [Setup](#setup)
 - [Install i3](#install-i3)
@@ -9,9 +12,11 @@
   - [Java](#java)
   - [SSH](#ssh)
   - [GPG](#gpg)
+  - [HP Printer](#hp-printer)
   - [Misc](#misc)
 
-## Setup
+Setup
+--------------------------------------------------------------------------------
 
 ```console
 $ curl https://releases.ubuntu.com/20.04.1/ubuntu-20.04.1-live-server-amd64.iso -O
@@ -28,7 +33,8 @@ $ dd if=ubuntu-20.04.1-live-server-amd64.iso of=/dev/<DEVICE> bs=32M status=prog
 $ shutdown -r now
 ```
 
-## Install [i3](https://i3wm.org/)
+Install [i3](https://i3wm.org/)
+--------------------------------------------------------------------------------
 
 ```console
 $ sudo -i
@@ -86,9 +92,10 @@ $ nano /etc/fstab
 $ shutdown -r now
 ```
 
-## Install Software
+Install Software
+--------------------------------------------------------------------------------
 
-### Core
+### Core ###
 
 ```console
 $ apt install -y --no-install-recommends fish fonts-cmu ttf-ancient-fonts fonts-firacode
@@ -111,13 +118,13 @@ $ apt install -y --no-install-recommends pulseaudio pulseaudio-utils pulsemixer
 $ usermod -aG pulse,pulse-access $USER
 ```
 
-### LaTeX
+### LaTeX ###
 
 ```console
 $ apt install -y --no-install-recommends texlive-full latexmk gimp
 ```
 
-### LLVM
+### LLVM ###
 
 ```console
 $ apt install -y --no-install-recommends graphviz gcc-9 g++-9 ninja-build
@@ -146,7 +153,7 @@ $ ln -sf /usr/bin/gcc-9 ~/.local/bin/cc
 $ ln -sf /usr/bin/g++-9 ~/.local/bin/g++
 ```
 
-### Java
+### Java ###
 
 ```console
 $ apt install -y --no-install-recommends openjdk-11-jdk
@@ -160,13 +167,13 @@ $ nano ~/.profile
 ### + PATH=$JAVA_HOME/bin:$PATH
 ```
 
-### SSH
+### SSH ###
 
 ```console
 $ ssh-keygen -f ~/.ssh/id_rsa
 ```
 
-### GPG
+### GPG ###
 
 <!-- https://docs.github.com/en/github/authenticating-to-github/generating-a-new-gpg-key -->
 
@@ -196,7 +203,26 @@ $ git config --global user.signingkey <KEYID>
 $ git config --global commit.gpgsign true
 ```
 
-### Misc
+### HP Printer ###
+
+```console
+$ apt install -y --no-install-recommends hplip
+```
+
+#### USB ####
+
+```console
+$ hp-setup -i
+```
+
+#### Network ####
+
+```console
+$ ping 192.168.0.60
+$ hp-setup -i 192.168.0.60
+```
+
+### Misc ###
 
 ```console
 $ apt install -y --no-install-recommends fortune-mod fortunes-off

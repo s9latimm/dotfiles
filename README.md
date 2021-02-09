@@ -12,7 +12,9 @@
   - [Java](#java)
   - [SSH](#ssh)
   - [GPG](#gpg)
-  - [HP Printer](#hp-printer)
+  - [HPLIP](#hplip)
+    - [USB](#usb)
+    - [Network](#network)
   - [Misc](#misc)
 
 Setup
@@ -202,7 +204,7 @@ $ git config --global user.signingkey <KEYID>
 $ git config --global commit.gpgsign true
 ```
 
-### HP Printer ###
+### [HPLIP](https://developers.hp.com/hp-linux-imaging-and-printing) ###
 
 ```console
 $ apt install -y --no-install-recommends hplip
@@ -216,9 +218,13 @@ $ hp-setup -i
 
 #### Network ####
 
+<!-- https://support.hp.com/us-en/document/c02480766 -->
+
 ```console
-$ ping 192.168.0.60
-$ hp-setup -i 192.168.0.60
+$ apt install -y --no-install-recommends nmap
+$ ifconfig
+$ nmap -p 515,631,9100 <SUBNET>/24
+$ hp-setup -i <IP>
 ```
 
 ### Misc ###

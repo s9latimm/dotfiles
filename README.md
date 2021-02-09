@@ -57,7 +57,6 @@ $ apt install -y i3 xinit xterm
 
 ```console
 $ nano ~/.profile
-### 
 ### + if [ -z "${DISPLAY}" ] && [ "${XDG_VTNR}" -eq 1 ] ; then
 ### +   exec startx >/dev/null 2>&1
 ### + fi
@@ -81,7 +80,7 @@ $ mount /dev/sdx /media/usb
 ```
 
 ```console
-mkdir -p <PATH>
+$ mkdir -p <PATH>
 $ id -u $USER
 $ id -g $USER
 $ nano /etc/fstab

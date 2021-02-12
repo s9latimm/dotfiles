@@ -9,6 +9,7 @@
   - [Core](#core)
   - [LaTeX](#latex)
   - [LLVM](#llvm)
+  - [Libraries](#libraries)
   - [Java](#java)
   - [SSH](#ssh)
   - [GPG](#gpg)
@@ -142,16 +143,24 @@ $ apt install -y --no-install-recommends cmake
 $ apt-key adv --fetch-keys https://apt.llvm.org/llvm-snapshot.gpg.key
 $ add-apt-repository -y 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-11 main'
 $ apt update
-$ apt install -y --no-install-recommends clang-11 llvm-11-dev clang-tidy-11
+$ apt install -y --no-install-recommends clang-11 llvm-11-dev clang-tidy-11 lld-11
 ```
 
 ```console
 $ ln -sf /usr/bin/clang-tidy-11 ~/.local/bin/clang-tidy
 $ ln -sf /usr/bin/clang++-11 ~/.local/bin/clang++
 $ ln -sf /usr/bin/clang-11 ~/.local/bin/clang
+$ ln -sf /usr/bin/lld-11 ~/.local/bin/lld
 $ ln -sf /usr/bin/gcc-9 ~/.local/bin/gcc
 $ ln -sf /usr/bin/gcc-9 ~/.local/bin/cc
 $ ln -sf /usr/bin/g++-9 ~/.local/bin/g++
+```
+
+#### Libraries ####
+
+```console
+$ apt install -y --no-install-recommends libboost-all-dev python-dev libsqlite3-dev libssl-dev
+$ apt install -y --no-install-recommends libxml2-dev libz3-dev libcurl4-openssl-dev
 ```
 
 ### Java ###
@@ -230,7 +239,7 @@ $ hp-setup -i <IP>
 ### Misc ###
 
 ```console
-$ apt install -y --no-install-recommends fortune-mod fortunes-off
+$ apt install -y --no-install-recommends fortune-mod fortunes-off lm-sensors
 ```
 
 <!--       _

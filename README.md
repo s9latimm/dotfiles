@@ -1,28 +1,13 @@
 <!-- https://daringfireball.net/projects/markdown/syntax.text -->
 
 [Ubuntu Server 20.04 LTS](https://ubuntu.com/server)
-================================================================================
-
-- [Setup](#setup)
-- [Install i3](#install-i3)
-- [Install Software](#install-software)
-  - [Core](#core)
-  - [LaTeX](#latex)
-  - [LLVM](#llvm)
-  - [Libraries](#libraries)
-  - [Java](#java)
-  - [SSH](#ssh)
-  - [GPG](#gpg)
-  - [HPLIP](#hplip)
-    - [USB](#usb)
-    - [Network](#network)
-  - [Misc](#misc)
+====================================================================================================
 
 Setup
---------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
 
 ```console
-$ curl https://releases.ubuntu.com/20.04.1/ubuntu-20.04.1-live-server-amd64.iso -O
+$ curl -OL https://releases.ubuntu.com/20.04.1/ubuntu-20.04.1-live-server-amd64.iso
 ```
 
 <!-- https://ubuntu.com/download/iot/installation-media#ubuntu -->
@@ -32,28 +17,20 @@ $ lsblk
 $ dd if=ubuntu-20.04.1-live-server-amd64.iso of=/dev/<DEVICE> bs=32M status=progress
 ```
 
-```console
-$ shutdown -r now
-```
-
 Install [i3](https://i3wm.org/)
---------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
 
 ```console
-$ sudo -i
+$ sudo timedatectl set-timezone Europe/Berlin
 ```
 
 ```console
-$ timedatectl set-timezone Europe/Berlin
+$ sudo apt update
+$ sudo apt upgrade -y
 ```
 
 ```console
-$ apt update
-$ apt -y upgrade
-```
-
-```console
-$ apt install -y i3 xinit xterm
+$ sudo apt install -y i3 xinit xterm
 ```
 
 <!-- https://wiki.archlinux.org/index.php/Xinit#Autostart_X_at_login -->
@@ -68,7 +45,7 @@ $ nano ~/.profile
 <!-- https://wiki.archlinux.org/index.php/Getty#Automatic_login_to_virtual_console -->
 
 ```console
-$ systemctl edit getty@tty1
+$ sudo systemctl edit getty@tty1
 ### + [Service]
 ### + ExecStart=
 ### + ExecStart=-/sbin/agetty --noissue --autologin <USER> %I $TERM
@@ -78,15 +55,15 @@ $ systemctl edit getty@tty1
 
 ```console
 $ lsblk 
-$ mkdir -p /media/usb
-$ mount /dev/sdx /media/usb
+$ sudo mkdir -p /media/usb
+$ sudo mount /dev/<DEVICE> /media/usb
 ```
 
 ```console
-$ mkdir -p <PATH>
+$ sudo mkdir -p <PATH>
 $ id -u $USER
 $ id -g $USER
-$ nano /etc/fstab
+$ sudo nano /etc/fstab
 ### + /dev/disk/by-uuid/<UUID> <PATH> <FILESYSTEM> uid=<UID>,gid=<GID>,sync,auto,rw 0 0
 ```
 
@@ -95,55 +72,59 @@ $ shutdown -r now
 ```
 
 Install Software
---------------------------------------------------------------------------------
+----------------------------------------------------------------------------------------------------
+
+```console
+$ alias apt-install="apt install -y --no-install-recommends"
+```
 
 ### Core ###
 
 ```console
-$ apt install -y --no-install-recommends fish fonts-cmu ttf-ancient-fonts fonts-firacode
+$ sudo apt-install fish fonts-cmu ttf-ancient-fonts fonts-firacode
 ```
 
 ```console
-$ apt install -y --no-install-recommends python3 python3-dev python3-pip
+$ sudo apt-install python3 python3-dev python3-pip
 ```
 
 ```console
-$ apt install -y --no-install-recommends firefox thunderbird git meld okular mpv feh xfe
+$ sudo apt-install firefox thunderbird git meld okular mpv feh xfe
 ```
 
 ```console
-$ apt install -y --no-install-recommends nvidia-driver-460 xrandr x11-xserver-utils
+$ sudo apt-install nvidia-driver-460 xrandr x11-xserver-utils
 ```
 
 ```console
-$ apt install -y --no-install-recommends pulseaudio pulseaudio-utils pulsemixer
+$ sudo apt-install pulseaudio pulseaudio-utils pulsemixer
 $ usermod -aG pulse,pulse-access $USER
 ```
 
 ### LaTeX ###
 
 ```console
-$ apt install -y --no-install-recommends texlive-full latexmk gimp
+$ sudo apt-install texlive-full latexmk gimp
 ```
 
-### LLVM ###
+### CMake / LLVM 11 ###
 
 ```console
-$ apt install -y --no-install-recommends graphviz gcc-9 g++-9 ninja-build
-```
-
-```console
-$ apt-key adv --fetch-keys  https://apt.kitware.com/keys/kitware-archive-latest.asc
-$ apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ focal main'
-$ apt update
-$ apt install -y --no-install-recommends cmake
+$ sudo apt-install graphviz gcc-9 g++-9 ninja-build
 ```
 
 ```console
-$ apt-key adv --fetch-keys https://apt.llvm.org/llvm-snapshot.gpg.key
-$ add-apt-repository -y 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-11 main'
-$ apt update
-$ apt install -y --no-install-recommends clang-11 llvm-11-dev clang-tidy-11 lld-11
+$ sudo apt-key adv --fetch-keys  https://apt.kitware.com/keys/kitware-archive-latest.asc
+$ sudo apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ focal main'
+$ sudo apt update
+$ sudo apt-install cmake
+```
+
+```console
+$ sudo apt-key adv --fetch-keys https://apt.llvm.org/llvm-snapshot.gpg.key
+$ sudo add-apt-repository -y 'deb http://apt.llvm.org/focal/ llvm-toolchain-focal-11 main'
+$ sudo apt update
+$ sudo apt-install clang-11 llvm-11-dev clang-tidy-11 lld-11
 ```
 
 ```console
@@ -159,22 +140,34 @@ $ ln -sf /usr/bin/g++-9 ~/.local/bin/g++
 #### Libraries ####
 
 ```console
-$ apt install -y --no-install-recommends libboost-all-dev python-dev libsqlite3-dev libssl-dev
-$ apt install -y --no-install-recommends libxml2-dev libz3-dev libcurl4-openssl-dev
+$ sudo apt-install libboost-all-dev python-dev libsqlite3-dev libssl-dev
+$ sudo apt-install libxml2-dev libz3-dev libcurl4-openssl-dev
 ```
 
-### Java ###
+### Java 11 ###
 
 ```console
-$ apt install -y --no-install-recommends openjdk-11-jdk
+$ sudo apt-install openjdk-11-jdk
 ```
 
 ```console
-$ update-alternatives --config java
-$ update-alternatives --config javac
+$ sudo update-alternatives --config java
+$ sudo update-alternatives --config javac
 $ nano ~/.profile
 ### + JAVA_HOME=/usr/lib/jvm/java-11-openjdk-amd64
 ### + PATH=$JAVA_HOME/bin:$PATH
+```
+
+### Gradle (latest) ###
+
+<!-- https://gradle.org/releases -->
+
+```console
+$ sudo apt-install jq
+$ URL="$(curl -sL https://services.gradle.org/versions/current | jq -r '.downloadUrl')"
+$ curl -OL $URL
+$ unzip -u ${URL##*/} -d ~/.local/share/ && rm -f ${URL##*/}
+$ ln -sf $(ls -1at $HOME/.local/share/*/bin/gradle | head -1) ~/.local/bin/gradle
 ```
 
 ### SSH ###
@@ -216,21 +209,21 @@ $ git config --global commit.gpgsign true
 ### [HPLIP](https://developers.hp.com/hp-linux-imaging-and-printing) ###
 
 ```console
-$ apt install -y --no-install-recommends hplip
+$ sudo apt-install hplip
 ```
 
-#### USB ####
+#### USB Printer ####
 
 ```console
 $ hp-setup -i
 ```
 
-#### Network ####
+#### Network Printer ####
 
 <!-- https://support.hp.com/us-en/document/c02480766 -->
 
 ```console
-$ apt install -y --no-install-recommends nmap
+$ sudo apt-install nmap
 $ ifconfig
 $ nmap -p 515,631,9100 <SUBNET>/24
 $ hp-setup -i <IP>
@@ -239,7 +232,7 @@ $ hp-setup -i <IP>
 ### Misc ###
 
 ```console
-$ apt install -y --no-install-recommends fortune-mod fortunes-off lm-sensors
+$ sudo apt-install fortune-mod fortunes-off lm-sensors
 ```
 
 <!--       _
